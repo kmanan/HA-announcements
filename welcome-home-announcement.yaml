@@ -1,0 +1,37 @@
+alias: Welcome home ##YOUR NAME##
+description: "Welcome home announcement"
+trigger:
+  - platform: device
+    device_id: 6c2c9df53227ce584a90580a74ba4bdc
+    domain: device_tracker
+    entity_id: device_tracker.<your iPhone>
+    type: enters
+    zone: zone.home
+condition: []
+action:
+  - wait_for_trigger:
+      - type: opened
+        platform: device
+        device_id: ba86a8f60edd838e676ecdb715ab1186
+        entity_id: binary_sensor.entrance_contact_sensor
+        domain: binary_sensor
+  - service: media_player.play_media
+    target:
+      entity_id: media_player.office
+    data:
+      media_content_id: >-
+        media-source://tts/google_translate?message=Welcome+home%2C+##YOUR NAME##.+Hope+you+had+a+pleasant+trip.&language=en-us
+      media_content_type: provider
+    metadata:
+      title: Welcome home, ##YOUT NAME##. Hope you had a pleasant trip.
+      thumbnail: https://brands.home-assistant.io/_/google_translate/logo.png
+      media_class: app
+      children_media_class: null
+      navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://tts
+        - media_content_type: provider
+          media_content_id: >-
+            media-source://tts/google_translate?message=Welcome+home%2C+##YOUR NAME##.+Hope+you+had+a+pleasant+trip.&language=en-us
+mode: single
